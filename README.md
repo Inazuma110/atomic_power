@@ -1,2 +1,2 @@
-# atomic_power
+# snippets_resycler
 atom snippet to vim
