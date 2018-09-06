@@ -3,6 +3,7 @@ const cson = require('cson');
 const exec = require('child_process').exec;
 const fs = require('fs');
 
+
 const appendFile = (path, data) => {
   fs.appendFile(path, data, (err) => {
     if(err) throw error;
@@ -21,7 +22,6 @@ const csonToJson = (callback) => {
       throw new Error('Error! check your cson file.')
     }
     callback(jsonSnippets);
-    // writeVimSnippet(jsonSnippets);
   });
 }
 
@@ -45,7 +45,6 @@ const writeVimSnippet = (jsonSnippets) => {
       appendFile(fileName, `snippet	${name}` + "\n");
       appendFile(fileName, `abbr	${jsonSnippets[lang][name]['prefix']}` + "\n");
       appendFile(fileName, "\t" + body + "\n\n");
-      // console.log(jsonSnippets[lang][name][elem]);
     }
   }
 }
@@ -56,8 +55,6 @@ const parseBody = (body) => {
   body = body.replace(indent, '\t');
   body = body.replace(/\n/g, '\n\t');
   body = body.replace(/(\$)(\d)/g, '$1{$2}')
-
-  console.log(body);
 
   let newest = '1';
   while (true) {
@@ -70,6 +67,8 @@ const parseBody = (body) => {
     while (true) {
       let index = body.match(searchReg);
       if(index == null) break;
+      // first $? has to be ${num:keyword} format.
+      // so append '@' to save first elem's index.
       if(isFirst){
         isFirst = false;
         firstIndex = index;
@@ -77,6 +76,7 @@ const parseBody = (body) => {
       }
       else body = body.replace(searchReg, '$1' + newest);
     }
+    // appended '@' delete.
     body = body.slice(0, firstIndex['index']+2) + body.slice(firstIndex['index']+3);
     newest = (Number(newest)+1) + '';
   }
@@ -87,3 +87,4 @@ const parseBody = (body) => {
 (() => {
   csonToJson(writeVimSnippet);
 })();
+
