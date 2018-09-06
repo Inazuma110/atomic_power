@@ -9,7 +9,7 @@ const appendFile = (path, data) => {
   });
 }
 
-const csonToJson = () => {
+const csonToJson = (callback) => {
   exec('node_modules/cson/bin/cson2json snippet.cson > snippet.json', (err, stdout, stderr) => {
     if (err) { console.log(err); }
     else console.log('Cson snippet trans json.');
@@ -20,12 +20,12 @@ const csonToJson = () => {
     } catch (e) {
       throw new Error('Error! check your cson file.')
     }
-    writeVimSnippet(jsonSnippets);
+    callback(jsonSnippets);
+    // writeVimSnippet(jsonSnippets);
   });
 }
 
 const writeVimSnippet = (jsonSnippets) => {
-  console.log(jsonSnippets);
   console.log('Please enter extension. ex) cpp');
   console.log("If you don't know extension,");
   console.log("please check https://github.com/atom/autocomplete-plus/wiki/Autocomplete-Providers");
@@ -81,6 +81,6 @@ const parseBody = (body) => {
 }
 
 
-(async() => {
-  await csonToJson();
+(() => {
+  csonToJson(writeVimSnippet);
 })();
