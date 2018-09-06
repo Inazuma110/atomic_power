@@ -54,6 +54,7 @@ const parseBody = (body) => {
   let indent = '(  )+?';
   indent = new RegExp(indent, 'g');
   body = body.replace(indent, '\t');
+  body = body.replace(/\n/g, '\n\t');
 
   let newest = '1';
   while (true) {
@@ -78,7 +79,6 @@ const parseBody = (body) => {
   }
   return body;
 }
-
 
 
 (async() => {
