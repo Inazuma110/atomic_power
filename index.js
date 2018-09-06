@@ -3,6 +3,9 @@ const cson = require('cson');
 const exec = require('child_process').exec;
 const fs = require('fs');
 
+const HOME = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
+let ATOM_SNIPPET_DIR = `${HOME}/.atom`;
+let VIM_SNIPPET_DIR = `${HOME}/.config/nvim/snippets`;
 
 const appendFile = (path, data) => {
   fs.appendFile(path, data, (err) => {
@@ -11,7 +14,7 @@ const appendFile = (path, data) => {
 }
 
 const csonToJson = (callback) => {
-  exec('node_modules/cson/bin/cson2json snippet.cson > snippet.json', (err, stdout, stderr) => {
+  exec(`node_modules/cson/bin/cson2json ${ATOM_SNIPPET_DIR}/snippets.cson > snippet.json`, (err, stdout, stderr) => {
     if (err) { console.log(err); }
     else console.log('Cson snippet trans json.');
 
@@ -33,7 +36,7 @@ const writeVimSnippet = (jsonSnippets) => {
   for (let lang in jsonSnippets) {
     const extension = rls.question(`What is extension of ${lang}?: `);
     for(let name in jsonSnippets[lang]){
-      let fileName = `./${extension}.snip`;
+      let fileName = `${VIM_SNIPPET_DIR}/${extension}.snip`;
       let body;
       try {
         body = parseBody(jsonSnippets[lang][name]['body']);
@@ -85,6 +88,11 @@ const parseBody = (body) => {
 
 
 (() => {
+  const NEW_VIM_SNIPPET_DIR = rls.question(`Your vim snippet directory(${VIM_SNIPPET_DIR}) :`);
+  if(NEW_VIM_SNIPPET_DIR != '') VIM_SNIPPET_DIR = NEW_VIM_SNIPPET_DIR;
+  const NEW_ATOM_SNIPPET_DIR = rls.question(`Your Atom snippet directory(${ATOM_SNIPPET_DIR}) :`);
+  if(NEW_VIM_SNIPPET_DIR != '') ATOM_SNIPPET_DIR = NEW_ATOM_SNIPPET_DIR;
+
   csonToJson(writeVimSnippet);
 })();
 
