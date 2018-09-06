@@ -55,6 +55,9 @@ const parseBody = (body) => {
   indent = new RegExp(indent, 'g');
   body = body.replace(indent, '\t');
   body = body.replace(/\n/g, '\n\t');
+  body = body.replace(/(\$)(\d)/g, '$1{$2}')
+
+  console.log(body);
 
   let newest = '1';
   while (true) {
