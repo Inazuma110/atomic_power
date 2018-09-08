@@ -1,2 +1,17 @@
 # snippets_resycler
-atom snippet to vim
+
+## Overview
+Atom snippets translate vim snippet format.
+
+## Install
+
+```sh
+$ sudo npm i -g snippets-resycler
+```
+
+## Usage
+
+```sh
+$ snippets-resycler
+```
+
