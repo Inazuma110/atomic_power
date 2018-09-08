@@ -7,7 +7,7 @@
   "author": "Inazuma110 <c011703534@edu.teu.ac.jp>",
   "license": "MIT",
   "bin": {
-    snippets_resycler: "bin/snippets-resycler.js"
+    "snippets-resycler": "bin/snippets-resycler.js"
   },
   "devDependencies": {
     "cson": "^5.1.0",
