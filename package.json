@@ -1,18 +1,18 @@
 {
   "name": "snippets-resycler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "atom snippet to vim",
   "main": "index.js",
   "repository": "git@github.com:Inazuma110/snippets-resycler.git",
   "author": "Inazuma110 <c011703534@edu.teu.ac.jp>",
   "license": "MIT",
-  "keywords": {
+  "keywords": [
     "atom",
     "vim",
     "nvim",
     "neovim",
     "snippet",
-  },
+  ],
   "bugs": {
     "url": "https://github.com/Inazuma110/snippets-resycler/issues"
   },
