@@ -1,4 +1,4 @@
-# snippets_resycler
+# snippets-resycler
 
 ## Overview
 Atom snippets translate vim snippet format.

@@ -2,6 +2,7 @@ const rls = require('readline-sync');
 const cson = require('cson');
 const exec = require('child_process').execSync;
 const fs = require('fs');
+const CSON = require('cson');
 
 const HOME = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
 let ATOM_SNIPPET_DIR = `${HOME}/.atom`;
@@ -19,16 +20,26 @@ class Lib {
 
   appendFile(path, data) {
     fs.appendFile(path, data, (err) => {
-      if(err) throw error;
+      if(err) throw err;
     });
   }
 
-csonToJson() {
-  exec(`node_modules/cson/bin/cson2json ${ATOM_SNIPPET_DIR}/snippets.cson > snippet.json`, (err, stdout, stderr) => {
-    if (err) console.log(err);
-    else console.log('Cson snippet trans json.');
-  });
-}
+  writeFile(path, data){
+    fs.writeFile(path, data, (err) => {
+      if(err) throw err;
+    });
+  }
+
+  async csonToJson() {
+    let jsonStr;
+    try {
+      jsonStr = await CSON.parseCSONFile(`${ATOM_SNIPPET_DIR}/snippets.cson`);
+      jsonStr = await CSON.createJSONString(jsonStr);
+    } catch (e) {
+      console.log(e);
+    }
+    return jsonStr;
+  }
 
 
   writeVimSnippet(jsonSnippets) {
