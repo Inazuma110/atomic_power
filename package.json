@@ -6,6 +6,9 @@
   "repository": "git@github.com:Inazuma110/snippets_resycler.git",
   "author": "Inazuma110 <c011703534@edu.teu.ac.jp>",
   "license": "MIT",
+  "bin": {
+    snippets_resycler: "bin/snippets-resycler.js"
+  },
   "devDependencies": {
     "cson": "^5.1.0",
     "readline-sync": "^1.4.9"
