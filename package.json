@@ -1,6 +1,6 @@
 {
   "name": "snippets-resycler",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "atom snippet to vim",
   "main": "index.js",
   "repository": "git@github.com:Inazuma110/snippets-resycler.git",
@@ -19,7 +19,7 @@
   "bin": {
     "snippets-resycler": "bin/snippets-resycler.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "cson": "^5.1.0",
     "readline-sync": "^1.4.9"
   }
