@@ -42,7 +42,7 @@ class Lib {
   }
 
 
-  writeVimSnippet(jsonSnippets) {
+  async writeVimSnippet(jsonSnippets) {
     console.log('Please enter extension. ex) cpp');
     console.log("If you don't know extension,");
     console.log("please check https://github.com/atom/autocomplete-plus/wiki/Autocomplete-Providers");
@@ -70,9 +70,9 @@ class Lib {
           }
           else throw e;
         }
-        this.appendFile(fileName, `snippet\t${name}` + "\n");
-        this.appendFile(fileName, `abbr\t${jsonSnippets[lang][name]['prefix']}` + "\n");
-        this.appendFile(fileName, "\t" + body + "\n\n");
+        await this.appendFile(fileName, `snippet\t${name}` + "\n");
+        await this.appendFile(fileName, `abbr\t${jsonSnippets[lang][name]['prefix']}` + "\n");
+        await this.appendFile(fileName, "\t" + body + "\n\n");
       }
     }
   }
