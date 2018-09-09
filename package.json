@@ -3,9 +3,10 @@
   "version": "0.0.7",
   "description": "atom snippet to vim",
   "main": "index.js",
-  "repository": "git+https://github.com/non258/colter/blob/master/package.json",
+  "repository": "git+https://github.com/Inazuma110/snippets-resycler.git",
   "author": "Inazuma110 <c011703534@edu.teu.ac.jp>",
   "license": "MIT",
+  "homepage": "https://github.com/Inazuma110/snippets-resycler#readme",
   "keywords": [
     "atom",
     "vim",
