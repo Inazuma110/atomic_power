@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict';
+
 const rls = require('readline-sync');
 const cson = require('cson');
 const exec = require('child_process').execSync;
@@ -10,16 +13,14 @@ let VIM_SNIPPET_DIR = `${HOME}/.config/nvim/snippets/`;
 
 class Lib {
   constructor() {
-    const NEW_VIM_SNIPPET_DIR = rls.question(`Your vim snippet directory(${VIM_SNIPPET_DIR}) :`);
+    const NEW_VIM_SNIPPET_DIR = rls.question(`Your vim path/to/snippet-directory(${VIM_SNIPPET_DIR}) :`);
     if(NEW_VIM_SNIPPET_DIR != '')
       VIM_SNIPPET_DIR = NEW_VIM_SNIPPET_DIR;
-    const NEW_ATOM_SNIPPET_DIR = rls.question(`Your Atom snippet directory(${ATOM_SNIPPET_DIR}) :`);
+    const NEW_ATOM_SNIPPET_DIR = rls.question(`Your Atom path/to/snippet-directory(${ATOM_SNIPPET_DIR}) :`);
     if(NEW_ATOM_SNIPPET_DIR != '')
       ATOM_SNIPPET_DIR = NEW_ATOM_SNIPPET_DIR;
     if(VIM_SNIPPET_DIR.slice(-1) != '/') VIM_SNIPPET_DIR += '/';
     if(ATOM_SNIPPET_DIR.slice(-1) != '/') ATOM_SNIPPET_DIR += '/';
-
-
   }
 
   appendFile(path, data) {
@@ -46,27 +47,25 @@ class Lib {
   }
 
 
-  async writeVimSnippet(jsonSnippets) {
+  async writeVimSnippet(jsonSnippets, isOverwrite) {
     console.log('Please enter extension. ex) cpp');
     console.log("If you don't know extension,");
     console.log("please check https://github.com/atom/autocomplete-plus/wiki/Autocomplete-Providers");
 
-    console.log(VIM_SNIPPET_DIR);
-    console.log(ATOM_SNIPPET_DIR);
-
     for (let lang in jsonSnippets) {
       const extension = rls.question(`What is extension of ${lang}?: `);
+      let fileName = `${VIM_SNIPPET_DIR}${extension}.snip`;
+      if(isOverwrite) await this.writeFile(fileName, '');
       let indentInfo;
       while (true)
       {
-        indentInfo = rls.question('This snippet indent(If you use 2 spaces, pleas enter 2.\nIf you use tab char, please enter tab.): ');
+        indentInfo = await rls.question('This snippet indent(If you use 2 spaces, pleas enter 2.\nIf you use tab char, please enter tab.): ');
         if(Number.isInteger(Number(indentInfo)) || indentInfo == 'tab') break;
         else console.log('This is neither integer nor tab. Please enter agein.');
       }
       for(let name in jsonSnippets[lang]){
-        let fileName = `${VIM_SNIPPET_DIR}${extension}.snip`;
         let body;
-        try { body = this.parseBody(jsonSnippets[lang][name]['body'], indentInfo); }
+        try { body = await this.parseBody(jsonSnippets[lang][name]['body'], indentInfo); }
         catch (e)
         {
           if(e instanceof TypeError)
