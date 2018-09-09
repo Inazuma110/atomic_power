@@ -1,6 +1,6 @@
 {
   "name": "snippets-resycler",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "atom snippet to vim",
   "main": "index.js",
   "repository": "git+https://github.com/Inazuma110/snippets-resycler.git",
