@@ -5,17 +5,21 @@ const fs = require('fs');
 const CSON = require('cson');
 
 const HOME = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
-let ATOM_SNIPPET_DIR = `${HOME}/.atom`;
-let VIM_SNIPPET_DIR = `${HOME}/.config/nvim/snippets`;
+let ATOM_SNIPPET_DIR = `${HOME}/.atom/`;
+let VIM_SNIPPET_DIR = `${HOME}/.config/nvim/snippets/`;
 
 class Lib {
   constructor() {
     const NEW_VIM_SNIPPET_DIR = rls.question(`Your vim snippet directory(${VIM_SNIPPET_DIR}) :`);
     if(NEW_VIM_SNIPPET_DIR != '')
-      this.VIM_SNIPPET_DIR = NEW_VIM_SNIPPET_DIR;
+      VIM_SNIPPET_DIR = NEW_VIM_SNIPPET_DIR;
     const NEW_ATOM_SNIPPET_DIR = rls.question(`Your Atom snippet directory(${ATOM_SNIPPET_DIR}) :`);
     if(NEW_ATOM_SNIPPET_DIR != '')
-      this.ATOM_SNIPPET_DIR != NEW_ATOM_SNIPPET_DIR;
+      ATOM_SNIPPET_DIR = NEW_ATOM_SNIPPET_DIR;
+    if(VIM_SNIPPET_DIR.slice(-1) != '/') VIM_SNIPPET_DIR += '/';
+    if(ATOM_SNIPPET_DIR.slice(-1) != '/') ATOM_SNIPPET_DIR += '/';
+
+
   }
 
   appendFile(path, data) {
@@ -33,7 +37,7 @@ class Lib {
   async csonToJson() {
     let jsonStr;
     try {
-      jsonStr = await CSON.parseCSONFile(`${ATOM_SNIPPET_DIR}/snippets.cson`);
+      jsonStr = await CSON.parseCSONFile(`${ATOM_SNIPPET_DIR}snippets.cson`);
       jsonStr = await CSON.createJSONString(jsonStr);
     } catch (e) {
       console.log(e);
@@ -47,6 +51,9 @@ class Lib {
     console.log("If you don't know extension,");
     console.log("please check https://github.com/atom/autocomplete-plus/wiki/Autocomplete-Providers");
 
+    console.log(VIM_SNIPPET_DIR);
+    console.log(ATOM_SNIPPET_DIR);
+
     for (let lang in jsonSnippets) {
       const extension = rls.question(`What is extension of ${lang}?: `);
       let indentInfo;
@@ -57,7 +64,7 @@ class Lib {
         else console.log('This is neither integer nor tab. Please enter agein.');
       }
       for(let name in jsonSnippets[lang]){
-        let fileName = `${VIM_SNIPPET_DIR}/${extension}.snip`;
+        let fileName = `${VIM_SNIPPET_DIR}${extension}.snip`;
         let body;
         try { body = this.parseBody(jsonSnippets[lang][name]['body'], indentInfo); }
         catch (e)
