@@ -2,10 +2,10 @@
 'use strict';
 
 const rls = require('readline-sync');
-const cson = require('cson');
 const exec = require('child_process').execSync;
 const fs = require('fs');
 const CSON = require('cson');
+const colors = require('./bin/colors');
 
 const HOME = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
 let ATOM_SNIPPET_DIR = `${HOME}/.atom/`;
