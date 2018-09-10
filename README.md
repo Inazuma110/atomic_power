@@ -28,8 +28,8 @@ $ snippets-resycler
 ## Screenshots
 ### Before
 /path/to/Atom-snippets-dir/snippets.cson
-![image](https://user-images.githubusercontent.com/31335755/45288542-e67a6b00-b525-11e8-8b02-65e4cbd711b5.png)
+![image](https://user-images.githubusercontent.com/31335755/45293564-7d015900-b533-11e8-83fd-be5fbb59b007.png)
 
 ### After
 /path/to/Vim-snippets-dir/cpp.snip
-![image](https://user-images.githubusercontent.com/31335755/45288623-17f33680-b526-11e8-9481-7c43e767f92f.png)
+![image](https://user-images.githubusercontent.com/31335755/45293647-bdf96d80-b533-11e8-824c-17f64a2741dd.png)
