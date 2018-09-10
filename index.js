@@ -13,10 +13,14 @@ let VIM_SNIPPET_DIR = `${HOME}/.config/nvim/snippets/`;
 
 class Lib {
   constructor() {
-    const NEW_VIM_SNIPPET_DIR = rls.question(`Your vim path/to/snippet-directory(${VIM_SNIPPET_DIR}) :`);
+    const NEW_VIM_SNIPPET_DIR = rls.question(
+      `Your vim path/to/snippet-directory(${VIM_SNIPPET_DIR}) :`
+    );
     if(NEW_VIM_SNIPPET_DIR != '')
       VIM_SNIPPET_DIR = NEW_VIM_SNIPPET_DIR;
-    const NEW_ATOM_SNIPPET_DIR = rls.question(`Your Atom path/to/snippet-directory(${ATOM_SNIPPET_DIR}) :`);
+    const NEW_ATOM_SNIPPET_DIR = rls.question(
+      `Your Atom path/to/snippet-directory(${ATOM_SNIPPET_DIR}) :`
+    );
     if(NEW_ATOM_SNIPPET_DIR != '')
       ATOM_SNIPPET_DIR = NEW_ATOM_SNIPPET_DIR;
     if(VIM_SNIPPET_DIR.slice(-1) != '/') VIM_SNIPPET_DIR += '/';
@@ -41,16 +45,19 @@ class Lib {
       jsonStr = await CSON.parseCSONFile(`${ATOM_SNIPPET_DIR}snippets.cson`);
       jsonStr = await CSON.createJSONString(jsonStr);
     } catch (e) {
-      console.log(e);
+      throw e;
     }
     return jsonStr;
   }
 
 
   async writeVimSnippet(jsonSnippets, isOverwrite) {
-    console.log('Please enter extension. ex) cpp');
-    console.log("If you don't know extension,");
-    console.log("please check https://github.com/atom/autocomplete-plus/wiki/Autocomplete-Providers");
+    console.log(colors.fillStr("green", "Please enter extension. ex) cpp"));
+    console.log(colors.fillStr("blue", "If you don't know extension,"));
+    console.log(colors.fillStr(
+      "blue",
+      "please check https://github.com/atom/autocomplete-plus/wiki/Autocomplete-Providers"
+    ));
 
     for (let lang in jsonSnippets) {
       const extension = rls.question(`What is extension of ${lang}?: `);
@@ -59,9 +66,13 @@ class Lib {
       let indentInfo;
       while (true)
       {
-        indentInfo = await rls.question('This snippet indent(If you use 2 spaces, pleas enter 2.\nIf you use tab char, please enter tab.): ');
+        indentInfo = await rls.question(
+          'Enter this snippet indent(If you use 2 spaces, pleas enter 2.If you use tab char, please enter tab.): '
+        );
         if(Number.isInteger(Number(indentInfo)) || indentInfo == 'tab') break;
-        else console.log('This is neither integer nor tab. Please enter agein.');
+        else console.log(colors.fillStr(
+          'yellow', 'This is neither integer nor tab. Please enter agein.'
+        ));
       }
       for(let name in jsonSnippets[lang]){
         let body;
@@ -70,14 +81,18 @@ class Lib {
         {
           if(e instanceof TypeError)
           {
-            console.log("Cannot find " + jsonSnippets[lang][name]['prefix'] + "'s body.");
-            console.log("This is skipeed.");
+            console.log(colors.fillStr(
+              "yellow", "Cannot find " + jsonSnippets[lang][name]['prefix'] + "'s body."
+            ));
+            console.log(colors.fillStr("yellow", "This is skipeed."));
             continue;
           }
           else throw e;
         }
         await this.appendFile(fileName, `snippet\t${name}` + "\n");
-        await this.appendFile(fileName, `abbr\t${jsonSnippets[lang][name]['prefix']}` + "\n");
+        await this.appendFile(
+          fileName, `abbr\t${jsonSnippets[lang][name]['prefix']}` + "\n"
+        );
         await this.appendFile(fileName, "\t" + body + "\n\n");
       }
     }
