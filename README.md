@@ -24,3 +24,12 @@ $ snippets-resycler
 | --------------- | -------------------------- | ---------------------------- |
 |   -h, --help    |         view help          |                              |
 | -o, --overwrite | snippets will be overwrite | default, it will be appended |
+
+## Screenshots
+### Before
+/path/to/Atom-snippets-dir/snippets.cson
+![image](https://user-images.githubusercontent.com/31335755/45288542-e67a6b00-b525-11e8-8b02-65e4cbd711b5.png)
+
+### After
+/path/to/Vim-snippets-dir/cpp.snip
+![image](https://user-images.githubusercontent.com/31335755/45288623-17f33680-b526-11e8-9481-7c43e767f92f.png)
