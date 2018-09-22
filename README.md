@@ -35,3 +35,6 @@ $ snippets-resycler
 
 ``/path/to/Vim-snippets-dir/cpp.snip``
 ![image](https://user-images.githubusercontent.com/31335755/45293647-bdf96d80-b533-11e8-824c-17f64a2741dd.png)
+
+## Contribution
+Fork and send Pull Request.
